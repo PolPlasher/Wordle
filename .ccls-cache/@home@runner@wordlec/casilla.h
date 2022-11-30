@@ -11,33 +11,32 @@ typedef struct {
   int color;
 } t_casilla;
 
-void inicializar_casilla(t_casilla casilla);
-void poner_letra_en_casilla(t_casilla casilla, char letra, int color);
+void inicializar_casilla(t_casilla *casilla);
+void poner_letra_en_casilla(t_casilla *casilla, char letra, int color);
 void imprimir_casilla(t_casilla casilla);
 
-void inicializar_casilla(t_casilla casilla) {
-  casilla.letra = ' ';
-  casilla.color = 0;
+void inicializar_casilla(t_casilla *casilla) {
+  casilla->letra = ' ';
+  casilla->color = TIPO_VACIA;
 }
 
-void poner_letra_en_casilla(t_casilla casilla, char letra, int color) {
-  casilla.letra = letra;
-  casilla.color = color;
+void poner_letra_en_casilla(t_casilla *casilla, char letra, int color) {
+  casilla->letra = letra;
+  casilla->color = color;
 }
 
 void imprimir_casilla(t_casilla casilla) {
   switch (casilla.color) {
-  case 0:
-    printf(" ");
+  case TIPO_LETRA_Y_POSICION:
+    printf_color(COLOR_LETRA_OK);
     break;
-  case 1:
-    printf_color(2);
+  case TIPO_LETRA_OK:
+    printf_color(COLOR_LETRA_OK);
     break;
-  case 2:
-    printf_color(3);
+  case TIPO_LETRA_KO:
+    printf_color(COLOR_LETRA_KO);
     break;
-  case 3:
-    printf_color(4);
+  default:
     break;
   }
   printf("%c", casilla.letra);

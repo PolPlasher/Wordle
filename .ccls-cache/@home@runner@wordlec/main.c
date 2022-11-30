@@ -5,17 +5,16 @@
 #define NUM_LETRAS_PALABRA 5
 #define NUM_FILAS 6
 
-void imprimir_tablero(char matriz[NUM_FILAS][NUM_LETRAS_PALABRA],
+void imprimir_tablero(t_casilla matriz[NUM_FILAS][NUM_LETRAS_PALABRA],
                       int num_intento);
-void inicializar_tablero(char matriz[NUM_FILAS][NUM_LETRAS_PALABRA]);
+void inicializar_tablero(t_casilla matriz[NUM_FILAS][NUM_LETRAS_PALABRA]);
 void pedir_palabra(char palabra[NUM_LETRAS_PALABRA]);
-void poner_palabra(char matriz[NUM_FILAS][NUM_LETRAS_PALABRA],
+void poner_palabra(t_casilla matriz[NUM_FILAS][NUM_LETRAS_PALABRA],
                    char palabra[NUM_LETRAS_PALABRA], int num_intento);
 
 int main() {
   char palabra[NUM_LETRAS_PALABRA];
-  // t_casilla casillas[NUM_FILAS][NUM_LETRAS_PALABRA];
-  char casillas[NUM_FILAS][NUM_LETRAS_PALABRA];
+  t_casilla casillas[NUM_FILAS][NUM_LETRAS_PALABRA];
   int num_intento = 0;
 
   inicializar_tablero(casillas);
@@ -27,12 +26,13 @@ int main() {
     borrar_pantalla();
   } while (num_intento < NUM_FILAS);
   imprimir_tablero(casillas, num_intento);
+
   return 0;
 }
 
-void imprimir_tablero(char matriz[NUM_FILAS][NUM_LETRAS_PALABRA],
+void imprimir_tablero(t_casilla matriz[NUM_FILAS][NUM_LETRAS_PALABRA],
                       int num_intento) {
-  int x, y, fila = 0, columna = 0, counter = 0;
+  int x, y, fila = 0, columna, counter = 0;
   printf("\n");
   for (x = 0; x < 13; x++) {
     printf("\t\t");
@@ -48,7 +48,7 @@ void imprimir_tablero(char matriz[NUM_FILAS][NUM_LETRAS_PALABRA],
         if (y % 2 == 0) {
           printf("|");
         } else {
-          printf("%c", matriz[fila][columna]);
+          imprimir_casilla(matriz[fila][columna]);
           columna++;
         }
       }
@@ -63,11 +63,11 @@ void imprimir_tablero(char matriz[NUM_FILAS][NUM_LETRAS_PALABRA],
   printf("\n");
 }
 
-void inicializar_tablero(char matriz[NUM_FILAS][NUM_LETRAS_PALABRA]) {
+void inicializar_tablero(t_casilla matriz[NUM_FILAS][NUM_LETRAS_PALABRA]) {
   int i, j;
   for (i = 0; i < NUM_FILAS; i++) {
     for (j = 0; j < NUM_LETRAS_PALABRA; j++) {
-      matriz[i][j] = ' ';
+      inicializar_casilla(&matriz[i][j]);
     }
   }
 }
@@ -81,10 +81,10 @@ void pedir_palabra(char palabra[NUM_LETRAS_PALABRA]) {
   scanf("%*c");
 }
 
-void poner_palabra(char matriz[NUM_FILAS][NUM_LETRAS_PALABRA],
+void poner_palabra(t_casilla matriz[NUM_FILAS][NUM_LETRAS_PALABRA],
                    char palabra[NUM_LETRAS_PALABRA], int num_intento) {
   int i;
   for (i = 0; i < NUM_LETRAS_PALABRA; i++) {
-    matriz[num_intento][i] = palabra[i];
+    poner_letra_en_casilla(&matriz[num_intento][i], palabra[i], TIPO_LETRA_KO);
   }
 }
