@@ -5,10 +5,12 @@ int main() {
   char palabra[NUM_LETRAS_PALABRA];
   t_casilla casillas[NUM_FILAS][NUM_LETRAS_PALABRA];
   char solucion[NUM_LETRAS_PALABRA] = "ARBOL";
-  int palabra_correcta = 0;
-  int num_intento = 0;
+  int palabra_correcta = 0, num_intento = 0, idioma;
 
+  inicializar_azar();
   inicializar_tablero(casillas);
+  idioma = IDIOMA_EN;
+  palabra_al_azar(idioma, contar_palabras(idioma), solucion);
   do {
     imprimir_tablero(casillas, num_intento);
     pedir_palabra(palabra);
